@@ -1,0 +1,83 @@
+---
+title: "Title Here"
+author: "Author Here"
+format:
+  cmc-article-pdf:
+    fontsize: 12pt
+    margin-left: 1.5in
+    margin-right: 1.5in
+    margin-bottom: 1.2in
+    margin-top: 1.2in
+    keep-tex: true
+    fig-pos: 'tbp'
+    tbl-pos: 'tbp'
+    include-in-header: header.tex
+bibliography: bibliography.bib
+abstract: | 
+  Recent studies have argued that democratizing does not lead to more redistributive economic policies. Implementing two new measures of democratic progress that better capture the expansion of political power to lower classes, I investigate the relationship between increased access to political participation and inheritance tax rates, following Scheve & Stasavage. I find some evidence of a relationship between _Equal Access to Political Power_ and top inheritance tax rates.
+---
+
+_SK: This Quarto (`.qmd`) template generates a PDF via a typesetting function called LaTeX. Quarto usage documentation is on <https://www.quarto.org>, and settings specific to PDFs are, for example, at: <https://quarto.org/docs/reference/formats/pdf.html>. Teaching fellows will be able to help with LaTeX and quarto, and we will spend more time on this on the last lecture. To use this template, you should make a copy of it and replace the text with your paper and figures._
+
+
+# Introduction
+
+Economic inequality is one of the biggest problems plaguing today's world. The richest 1% of people own almost 46% of the world's wealth while 55% of adults have less than \$10,000; more than half of the world owns only 1.3% of its wealth.[^1] 
+One proposed mechanism for addressing growing economic inequality is inheritance taxation. Some politicians have suggested that it can raise revenue and reduce inequality of opportunity for future generations, especially when the wealthiest citizens are taxed at higher rates [@scheve2012]. **SK: This paragraph uses a footnote and a citation.**
+
+[^1]: "Global Inequality." 2022. *Inequality.org*. <https://inequality.org/facts/global-inequality/>.
+
+There is some disagreement about what political factors influence redistributive taxes. Some studies find that democratization leads to increased taxation while others argue that democracy and economic redistribution are only related under certain political conditions [@acemoglu2015democracy; @albertus2014gaming]. On the other hand, some argue that democratization does not increase redistributive taxes, including @scheve2012, who argue that mass mobilization is a main determinant of the implementation of inheritance taxation. Using universal male suffrage and competitive elections indicators, they do not find a positive relationship between democracy and the top rate of inheritance taxation. **SK: This paragraph uses multiple citations in a group. See <https://quarto.org/docs/authoring/footnotes-and-citations.html> for more.**
+
+# Analysis
+
+The intuition of my proposal can be seen in @fig-example. The original authors' measure of democracy changes abruptly at universal suffrage, but my measures of Equal Access to Power and Civil Society to Power changes more gradually. [**SK: See qmd code for an example to insert figures, add a caption, and add a label that you can then reference in text**]
+
+![Time Trends for Different Measures of Democratic Participation in the United Kingdom, 1816-2000](figures/image7.png){#fig-example width="50%"}
+
+Using data collected from V-Dem of the two new measures of democratization, joint with the data used by [@scheve2012], I investigate the relationship between democracies that have given enough political power to their lower socioeconomic classes and redistributive taxation. I employ two main models. The first model uses a differences-in-differences approach that estimates the causal effect of democracy and wars of mass mobilization on inheritance taxation with an ordinary least squares regression represented by: $$T_{it} = \alpha + \beta_{1}D_{i,t - 1} + \beta_{2}W_{i,t - 1} + \gamma X_{i,t - 1} + \eta_{i} + \theta_{t} + \epsilon_{it},$$ where $T_{it}$ is the top inheritance tax rate for direct descendants for country *i* in year *t*.
+
+# Results
+
+@tbl-main shows the results of the regression. I find some evidence for the importance of considering inequities in access to power when investigating what causes increases in inheritance taxation. While inconsistent, some models find that the effect of the lagged Equal Access to Power index on top inheritance taxation is statistically significant.
+
+[**SK: The quarto code below puts in a figure into a markdown table and calls it a table. Inserting tables are more complicated than inserting figures, so a hack is to include the image of the table as I have done here. Alternatively, you can also ask R to generate tables in a .tex format and ask quarto read it in as a tex file. See Appendix.**]
+
+|                        |
+|:-----------------------|
+| ![](figures/image3.png) |
+
+: War Mobilization, Democracy, and Inheritance Taxation, 1816-2000 {#tbl-main}
+
+
+
+[**SK: Do not delete the two lines of quarto code that starts with `::: {#refs}`. This produces a list of references.**]
+
+::: {#refs}
+:::
+
+
+# Appendix {.appendix}
+
+
+```{=tex}
+\begin{table}
+\caption{\textbf{tex version of modelsummary output}}
+\label{tab:main-tex}
+\input{tables/scheve-regression.tex}
+\end{table}
+```
+
+
+Adding a `{.appendix}` next to your section header makes it an Appendix.
+
+Table \ref{tab:main-tex} is a table generated in LaTeX. LaTeX is a different language than R or markdown. So, we denote that we are using tex code explicitly by using the `{=tex}` tag. However, often quarto can detect LaTeX code. For example, the notation `\ref{tab:main-tex}` used in the top of this paragraph is tex code that quarto recognizes, and captures the number of the table. 
+
+The file `tables/scheve-regression.tex` can be generated in your R script. When you create the table with `modelsummary`, add `output = "gt"` inside `modelsummary()`, and saving the output of `modelsummary` into `gt::gtsave()`. For example, this uses a simple example:
+
+![](figures/codesnippet.png){width="80%"}
+
+Then, the code chunk starting with `{=tex}` in the quarto code will read in the tex table, and add additional environments around it. For more on these environments, see <https://www.overleaf.com/learn/latex/Environments> and the chapters in the website. ChatGPT should be quite good too at providing snippets of LaTeX code. All the teaching fellows and instructors can help with TeX. 
+
+
+
